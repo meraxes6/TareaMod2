@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+    - "8000:80"
+
+  db:
+    image: postgres:latest
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval    : 1s
+      timeout: 5s
+      retries: 10
+    environment:
+      POSTGRES_PASSWORD: Csdqd3m0
+      POSTGRES_DB: tarea
+      POSTGRES_USER: postgres
+    ports:
+    - "5432:5432"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - "8080:8080"
+    depends_on:
+      - db
